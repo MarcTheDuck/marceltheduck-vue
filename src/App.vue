@@ -1,23 +1,46 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/CatchCard.vue'
+declare module '@tsparticles/vue3';
+import Engine from '@tsparticles/engine';
+
+const particlesLoaded = async container => {
+    console.log("Particles container loaded", container);
+};
+const particlesOptions = {
+    /* options */
+};
+async function particlesInit(engine: Engine): Promise<void> {
+    console.log("Particles engine init", engine);
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/MarcelTheDuck.png" width="125" height="125" />
+  <div id="app">
+    <vue-particles id="tsparticles" @particles-loaded="particlesLoaded">
+      <h1>test</h1>
+    </vue-particles>
+    <header>
+      <img alt="Vue logo" class="logo" src="@/assets/MarcelTheDuck.png" width="125" height="125" />
+      <vue-particles id="tsparticles" @init:="particlesInit" @particles-loaded="particlesLoaded" /> 
+      <vue-particles
+            id="tsparticles"
+            @particles-loaded="particlesLoaded"
+            URL="@/scripts/config/old_particles.json"
+        />
+      <div class="wrapper">
+        <HelloWorld msg="Marcel Andersen" />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+        <nav>
+          <RouterLink to="/">About</RouterLink>
+          <RouterLink to="/values">Values</RouterLink>
+          <RouterLink to="/projects">Projects</RouterLink>
+        </nav>
+      </div>
+    </header>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+    <RouterView />
+  </div>
 </template>
 
 <style scoped>
@@ -40,10 +63,7 @@ nav {
 
 nav a.router-link-exact-active {
   color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
+  background-color: hsla(160, 100%, 37%, 0.2);
 }
 
 nav a {

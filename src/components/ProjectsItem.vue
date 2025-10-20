@@ -1,13 +1,22 @@
+<script setup lang="ts">
+defineProps<{
+    title: string,
+    description: string,
+    iconUrl: string,
+    link: string,
+}>()
+</script>
+
 <template>
   <div class="item">
-    <i>
-      <slot name="icon"></slot>
-    </i>
+    <a :href="link" target="_blank" rel="noopener noreferrer">
+      <i>
+        <img :src="iconUrl" :alt="title + ' icon'" width="24" height="24" />
+      </i>
+    </a>
     <div class="details">
-      <h3>
-        <slot name="heading"></slot>
-      </h3>
-      <slot></slot>
+      <h3>{{ title }}</h3>
+      <p>{{ description }}</p>
     </div>
   </div>
 </template>
